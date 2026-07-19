@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>NVIDIA Hub</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2376b900'/%3E%3Cpath d='M8 18V6l8 12V6' stroke='%2308090c' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./app.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<div id="app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside id="sidebar">
+    <div class="logo">
+      <div class="logo-mark">
+        <div class="logo-mark-inner">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#76b900" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V4l10 16V4"/></svg>
+        </div>
+      </div>
+      <div class="logo-text">NVIDIA<span>Hub</span></div>
+    </div>
+
+    <nav id="nav">
+      <button class="nav-btn active" data-view="chat" title="Чат">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="nav-label">Чат</span>
+      </button>
+      <button class="nav-btn" data-view="coder" title="Coder">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span class="nav-label">Coder</span>
+      </button>
+      <button class="nav-btn" data-view="keys" title="Ключи">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.8 7.8 5.5 5.5 0 0 1 7.8-7.8zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        <span class="nav-label">Ключи</span>
+      </button>
+      <button class="nav-btn" data-view="proxies" title="Прокси">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="nav-label">Прокси</span>
+      </button>
+      <button class="nav-btn" data-view="stats" title="Статистика">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 17v-6M13 17V8M18 17v-9"/></svg>
+        <span class="nav-label">Статистика</span>
+      </button>
+      <button class="nav-btn" data-view="settings" title="Настройки">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="nav-label">Настройки</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <span class="nav-label">OpenAI-совместимый прокси</span>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main id="main">
+
+    <!-- ======== CHAT ======== -->
+    <section id="view-chat" class="view active">
+      <header class="view-header">
+        <div class="view-titles">
+          <h1>Чат</h1>
+        </div>
+        <div class="header-actions">
+          <span id="chat-counter" class="chat-counter"></span>
+          <button id="chat-export" class="btn ghost" title="Скачать чат в Markdown">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Экспорт
+          </button>
+          <button id="chat-new" class="btn ghost">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Новый чат
+          </button>
+          <button id="chat-params-toggle" class="btn icon ghost" title="Панель параметров">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="chat-wrap">
+        <aside id="chat-history" class="chat-history">
+          <div class="history-head">
+            <button id="history-new" class="btn accent sm">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Новый чат
+            </button>
+          </div>
+          <div id="history-list" class="history-list"></div>
+        </aside>
+        <div class="resizer" id="resizer-history" title="Потяните, чтобы изменить ширину · двойной клик — сброс"></div>
+
+        <div class="chat-main">
+          <div id="chat-messages" class="messages">
+            <div class="messages-inner" id="chat-messages-inner"></div>
+            <div id="chat-empty" class="empty">
+              <div class="empty-icon">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <h3>О чём поговорим?</h3>
+              <p>Напишите сообщение — ответ появится по мере генерации. Или начните с примера:</p>
+              <div class="empty-chips">
+                <button class="chip" data-prompt="Объясни этот код простыми словами: как он работает и где могут быть ошибки">Объясни код</button>
+                <button class="chip" data-prompt="Напиши скрипт на Python, который следит за папкой и показывает новые файлы">Напиши скрипт</button>
+                <button class="chip" data-prompt="Переведи на английский: «Скорость важна, но точность важнее»">Переведи</button>
+                <button class="chip" data-prompt="Предложи идею небольшого проекта на выходные с использованием LLM">Идея для проекта</button>
+              </div>
+            </div>
+          </div>
+
+          <form id="chat-form" class="composer" autocomplete="off">
+            <div class="composer-inner">
+              <textarea id="chat-input" rows="1" placeholder="Сообщение…  (Enter — отправить, Shift+Enter — новая строка)"></textarea>
+              <button type="button" id="chat-stop" class="btn icon danger hidden" title="Остановить генерацию">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+              </button>
+              <button type="submit" id="chat-send" class="btn icon accent" title="Отправить" disabled>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="resizer" id="resizer-params" title="Потяните, чтобы изменить ширину · двойной клик — сброс"></div>
+        <aside id="chat-params" class="params-panel">
+          <div class="params-head">Параметры</div>
+          <div class="param-block">
+            <label class="param-label" for="chat-model">Модель</label>
+            <div class="model-row">
+              <select id="chat-model" class="input select"></select>
+              <button type="button" class="btn icon ghost sm js-models-refresh" title="Обновить список моделей">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="param-block">
+            <button type="button" id="sysprompt-toggle" class="sysprompt-toggle">
+              <span class="tree-chev"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+              Роль / системный промпт
+            </button>
+            <div id="sysprompt-body" class="sysprompt-body hidden">
+              <textarea id="p-system-prompt" class="input" rows="4" placeholder="Например: Ты — senior Python-разработчик…"></textarea>
+            </div>
+          </div>
+          <div class="param-block">
+            <div class="param-head">
+              <label class="param-label" for="p-temperature">Температура</label>
+              <span class="param-val" id="p-temperature-val">0.70</span>
+            </div>
+            <input type="range" id="p-temperature" min="0" max="2" step="0.05" value="0.7">
+          </div>
+          <div class="param-block">
+            <div class="param-head">
+              <label class="param-label" for="p-top-p">Top&nbsp;P</label>
+              <span class="param-val" id="p-top-p-val">1.00</span>
+            </div>
+            <input type="range" id="p-top-p" min="0" max="1" step="0.01" value="1">
+          </div>
+          <div class="param-block">
+            <div class="param-head">
+              <label class="param-label" for="p-max-tokens">Макс. токенов</label>
+              <span class="param-val" id="p-max-tokens-val">2048</span>
+            </div>
+            <input type="range" id="p-max-tokens" min="128" max="8192" step="128" value="2048">
+          </div>
+          <button id="params-reset" class="btn ghost sm">Сбросить</button>
+          <div class="params-hint">Параметры и черновик промпта хранятся в браузере.</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======== CODER ======== -->
+    <section id="view-coder" class="view">
+      <div class="coder-grid">
+        <div class="coder-col files-col">
+          <div class="col-header">
+            <span class="col-title">Workspace</span>
+            <button id="files-refresh" class="btn icon ghost sm" title="Обновить">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+            </button>
+          </div>
+          <div id="file-tree" class="file-tree"></div>
+        </div>
+        <div class="resizer" id="resizer-files" title="Потяните, чтобы изменить ширину · двойной клик — сброс"></div>
+
+        <div class="coder-col editor-col">
+          <div id="editor-tabs" class="editor-tabs"></div>
+          <div id="editor-empty" class="empty">
+            <div class="empty-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            </div>
+            <h3>Файл не выбран</h3>
+            <p>Выберите файл в дереве слева или попросите агента что-нибудь сделать.</p>
+          </div>
+          <div id="editor-wrap" class="editor-wrap hidden">
+            <div class="editor-toolbar">
+              <code id="editor-path" class="editor-path"></code>
+              <div class="editor-actions">
+                <button id="editor-preview-toggle" class="btn icon ghost sm" title="Предпросмотр с подсветкой">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button id="editor-save" class="btn accent sm" disabled>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                  Сохранить
+                </button>
+              </div>
+            </div>
+            <textarea id="editor-textarea" spellcheck="false" wrap="off"></textarea>
+            <pre id="editor-preview" class="editor-preview hidden"><code id="editor-preview-code"></code></pre>
+          </div>
+        </div>
+        <div class="resizer" id="resizer-agent" title="Потяните, чтобы изменить ширину · двойной клик — сброс"></div>
+
+        <div class="coder-col agent-col">
+          <div class="col-header">
+            <span class="col-title">Агент</span>
+            <div class="model-row">
+              <select id="agent-model" class="input select sm"></select>
+              <button type="button" class="btn icon ghost sm js-models-refresh" title="Обновить список моделей">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="agent-messages" class="messages agent-messages">
+            <div id="agent-empty" class="empty">
+              <div class="empty-icon">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>
+              </div>
+              <h3>Агент-программист</h3>
+              <p>Читает и правит файлы в workspace, запускает команды. Просто напишите, что нужно сделать.</p>
+              <div class="empty-chips">
+                <button class="chip" data-agent-prompt="Покажи, какие файлы есть в workspace">Что в workspace?</button>
+                <button class="chip" data-agent-prompt="Создай файл hello.py с функцией приветствия">Создай hello.py</button>
+              </div>
+            </div>
+          </div>
+          <form id="agent-form" class="composer sm" autocomplete="off">
+            <div class="composer-inner">
+              <textarea id="agent-input" rows="1" placeholder="Задача для агента…"></textarea>
+              <button type="button" id="agent-stop" class="btn icon danger hidden" title="Остановить">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+              </button>
+              <button type="submit" id="agent-send" class="btn icon accent" title="Отправить" disabled>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== KEYS ======== -->
+    <section id="view-keys" class="view">
+      <header class="view-header">
+        <div class="view-titles">
+          <h1>Ключи</h1>
+          <p class="subtitle">Ваши NVIDIA API-ключи</p>
+        </div>
+        <div class="header-actions">
+          <button id="keys-refresh" class="btn icon ghost" title="Обновить">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+          </button>
+          <button id="keys-import-toggle" class="btn ghost">Импорт</button>
+          <button id="keys-add-toggle" class="btn accent">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Добавить ключ
+          </button>
+        </div>
+      </header>
+
+      <div class="view-scroll">
+        <div class="endpoint-card card">
+          <div class="endpoint-info">
+            <span class="endpoint-label">Прокси-эндпоинт (base_url)</span>
+            <code id="endpoint-url" class="endpoint-url"></code>
+          </div>
+          <button id="endpoint-copy" class="copy-btn btn ghost sm">
+            <span class="ic-copy">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Копировать
+            </span>
+            <span class="ic-check">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Скопировано
+            </span>
+          </button>
+        </div>
+
+        <div id="key-add-form" class="card form-card hidden">
+          <div class="form-title">Новый ключ</div>
+          <input id="new-key" class="input mono" type="text" placeholder="nvapi-…" autocomplete="off" spellcheck="false">
+          <input id="new-key-label" class="input" type="text" placeholder="Метка (необязательно)" autocomplete="off">
+          <div class="form-label">Привязать прокси</div>
+          <div id="new-key-proxies" class="proxy-checks"></div>
+          <div class="form-actions">
+            <button id="add-key-cancel" class="btn ghost">Отмена</button>
+            <button id="add-key-submit" class="btn accent">Добавить</button>
+          </div>
+        </div>
+
+        <div id="key-import-form" class="card form-card hidden">
+          <div class="form-title">Массовый импорт</div>
+          <textarea id="import-text" class="input mono" rows="6" placeholder="По одному ключу на строку&#10;nvapi-…&#10;nvapi-…" spellcheck="false"></textarea>
+          <div class="form-actions">
+            <button id="import-cancel" class="btn ghost">Отмена</button>
+            <button id="import-submit" class="btn accent">Импортировать</button>
+          </div>
+        </div>
+
+        <div id="keys-list" class="cards-list"></div>
+      </div>
+    </section>
+
+    <!-- ======== PROXIES ======== -->
+    <section id="view-proxies" class="view">
+      <header class="view-header">
+        <div class="view-titles">
+          <h1>Прокси</h1>
+          <p class="subtitle">Промежуточные серверы для запросов</p>
+        </div>
+        <div class="header-actions">
+          <button id="proxies-refresh" class="btn icon ghost" title="Обновить">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="view-scroll">
+        <div class="card form-card proxy-add-card">
+          <div class="form-title">Добавить прокси</div>
+          <div class="proxy-add-row">
+            <input id="new-proxy-url" class="input mono" type="text" placeholder="http://user:pass@host:port  или  socks5://host:port" autocomplete="off" spellcheck="false">
+            <button id="add-proxy-submit" class="btn accent">Добавить</button>
+          </div>
+        </div>
+        <div id="proxies-list" class="cards-list"></div>
+      </div>
+    </section>
+
+    <!-- ======== STATS ======== -->
+    <section id="view-stats" class="view">
+      <header class="view-header">
+        <div class="view-titles">
+          <h1>Статистика</h1>
+          <p class="subtitle">Активность сервера</p>
+        </div>
+        <div class="header-actions">
+          <label class="auto-toggle">
+            <span class="switch"><input type="checkbox" id="stats-auto" checked><span class="slider"></span></span>
+            Автообновление · 5с
+          </label>
+          <button id="stats-refresh" class="btn icon ghost" title="Обновить">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+          </button>
+          <button id="stats-reset" class="btn ghost danger-text">Сбросить</button>
+        </div>
+      </header>
+
+      <div class="view-scroll">
+        <div id="stats-cards" class="stats-cards">
+          <div class="card stat-card">
+            <div class="stat-label">Запросов</div>
+            <div class="stat-value" id="stat-requests">—</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-label">Токенов</div>
+            <div class="stat-value" id="stat-tokens">—</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-label">Ошибок</div>
+            <div class="stat-value" id="stat-errors">—</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-label">Аптайм</div>
+            <div class="stat-value" id="stat-uptime">—</div>
+          </div>
+        </div>
+
+        <div class="card table-card" id="stats-table-wrap">
+          <div class="form-title">По ключам</div>
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Ключ</th><th>Статус</th><th>Запросы</th><th>Ошибки</th><th>Токены</th><th>Ср. задержка</th>
+                </tr>
+              </thead>
+              <tbody id="stats-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card table-card" id="logs-table-wrap">
+          <div class="logs-head">
+            <div class="form-title">Последние запросы</div>
+            <button id="logs-clear" class="btn ghost sm danger-text">Очистить</button>
+          </div>
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Время</th><th>Модель</th><th>Ключ</th><th>Прокси</th><th>Статус</th><th>Задержка</th><th>Токены</th>
+                </tr>
+              </thead>
+              <tbody id="logs-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== SETTINGS ======== -->
+    <section id="view-settings" class="view">
+      <header class="view-header">
+        <div class="view-titles">
+          <h1>Настройки</h1>
+          <p class="subtitle">Общие параметры сервера</p>
+        </div>
+        <div class="header-actions">
+          <button id="settings-reset" class="btn ghost" title="Перечитать настройки с сервера">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+            Сбросить
+          </button>
+          <button id="settings-save" class="btn accent" disabled>
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Сохранить
+          </button>
+        </div>
+      </header>
+
+      <div class="view-scroll settings-scroll">
+        <div class="card form-card">
+          <div class="form-title">Маршрутизация</div>
+          <div class="set-field">
+            <label class="param-label" for="set-strategy">Стратегия выбора ключа</label>
+            <select id="set-strategy" class="input select">
+              <option value="round_robin">По кругу</option>
+              <option value="least_used">Наименее нагруженный</option>
+            </select>
+          </div>
+          <div class="set-grid">
+            <div class="set-field">
+              <label class="param-label" for="set-max-retries">Повторных попыток</label>
+              <input id="set-max-retries" class="input mono" type="number" min="1" max="10" step="1">
+              <div class="set-hint">max_retries · от 1 до 10</div>
+            </div>
+            <div class="set-field">
+              <label class="param-label" for="set-cooldown">Пауза ключа после ошибки</label>
+              <input id="set-cooldown" class="input mono" type="number" min="5" max="3600" step="1">
+              <div class="set-hint">cooldown_s, сек · от 5 до 3600</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card form-card">
+          <div class="form-title">Модель по умолчанию</div>
+          <div class="set-field">
+            <label class="param-label" for="set-default-model">Модель</label>
+            <div class="model-row">
+              <select id="set-default-model" class="input select"></select>
+              <button type="button" class="btn icon ghost sm js-models-refresh" title="Обновить список моделей">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+              </button>
+            </div>
+            <div class="set-hint">Подставляется в UI и в запросы без явного поля model.</div>
+          </div>
+        </div>
+
+        <div class="card form-card">
+          <div class="form-title">Сервер</div>
+          <div class="set-field">
+            <label class="param-label" for="set-port">Порт</label>
+            <input id="set-port" class="input mono" type="number" min="1" max="65535" step="1">
+            <div class="set-hint">Изменение порта применится после перезапуска сервера.</div>
+          </div>
+          <div class="endpoint-inline">
+            <div class="endpoint-info">
+              <span class="endpoint-label">Прокси-эндпоинт (base_url)</span>
+              <code id="set-base-url" class="endpoint-url"></code>
+            </div>
+            <button id="set-base-url-copy" class="copy-btn btn ghost sm">
+              <span class="ic-copy">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Копировать
+              </span>
+              <span class="ic-check">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                Скопировано
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

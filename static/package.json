@@ -1,0 +1,5 @@
+{
+  "name": "nvidia-hub-frontend",
+  "private": true,
+  "type": "module"
+}
