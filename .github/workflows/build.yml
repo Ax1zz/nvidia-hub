@@ -47,4 +47,4 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload v1.0.0 "${{ matrix.asset }}" --dir out --clobber --repo Ax1zz/nvidia-hub
+        run: gh release upload v1.0.0 "out/${{ matrix.asset }}" --clobber --repo Ax1zz/nvidia-hub
