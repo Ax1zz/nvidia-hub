@@ -10,6 +10,7 @@ import copy
 import json
 import logging
 import os
+import sys
 import time
 import uuid
 from pathlib import Path
@@ -17,11 +18,18 @@ from typing import Any, Callable
 
 logger = logging.getLogger("nvidia_hub.config")
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+if getattr(sys, "frozen", False):
+    # PyInstaller one-file bundle: static assets live inside the bundle
+    # (sys._MEIPASS), writable data/workspace live next to the executable.
+    BASE_DIR = Path(sys.executable).resolve().parent
+    STATIC_DIR = Path(getattr(sys, "_MEIPASS", BASE_DIR)) / "static"
+else:
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    STATIC_DIR = BASE_DIR / "static"
+
 DATA_DIR = BASE_DIR / "data"
 CONFIG_PATH = DATA_DIR / "config.json"
 WORKSPACE_DIR = BASE_DIR / "workspace"
-STATIC_DIR = BASE_DIR / "static"
 
 DEFAULT_SETTINGS: dict[str, Any] = {
     "strategy": "round_robin",  # round_robin | least_used

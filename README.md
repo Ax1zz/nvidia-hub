@@ -52,7 +52,16 @@ No `.env` files, no YAML — everything is configured from the web interface.
   <img src="docs/screenshots/stats.png" alt="Live statistics" width="49%">
 </p>
 
-### 🚀 Quick start
+### 📦 Download prebuilt binaries — no Python needed
+
+Grab the ready-made standalone build from [**Releases**](https://github.com/Ax1zz/nvidia-hub/releases/latest):
+
+- **Windows:** `nvidia-hub-windows.exe` — double-click, done
+- **Linux:** `nvidia-hub-linux` — `chmod +x nvidia-hub-linux && ./nvidia-hub-linux`
+
+Then open **http://localhost:8400**. Keys and settings are stored in `data/` next to the binary. Set `PORT` env var to change the port.
+
+### 🚀 Quick start (from source)
 
 Requirements: **Python 3.10+**
 
@@ -145,7 +154,16 @@ Issues and pull requests are welcome. If this project saved you time — **give 
 - **📊 Живая статистика** — использование по ключам, лог последних запросов с моделью/задержкой/статусом, аптайм, автообновление.
 - **🖥️ Конфиг без ручной возни** — `data/config.json` создаётся автоматически, всё меняется из интерфейса.
 
-### 🚀 Запуск
+### 📦 Готовые бинарники — Python не нужен
+
+Скачайте standalone-сборку из раздела [**Releases**](https://github.com/Ax1zz/nvidia-hub/releases/latest):
+
+- **Windows:** `nvidia-hub-windows.exe` — двойной клик, и готово
+- **Linux:** `nvidia-hub-linux` — `chmod +x nvidia-hub-linux && ./nvidia-hub-linux`
+
+Откройте **http://localhost:8400**. Ключи и настройки хранятся в папке `data/` рядом с бинарником. Порт меняется переменной окружения `PORT`.
+
+### 🚀 Запуск (из исходников)
 
 Требуется **Python 3.10+**
 

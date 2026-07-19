@@ -4,3 +4,5 @@ workspace/
 __pycache__/
 *.pyc
 *.log
+build/
+dist/
